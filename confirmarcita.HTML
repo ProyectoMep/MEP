@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Confirmar Cita - MEP</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+
+    .top-bar, .nav-links {
+      background-color: #005baa;
+      color: white;
+      padding: 10px;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar {
+      background-color: #003366;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin-right: 15px;
+    }
+
+    .container {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .check-icon {
+      font-size: 48px;
+      color: green;
+    }
+
+    h2 {
+      margin-top: 10px;
+      font-size: 24px;
+    }
+
+    .details-box {
+      background-color: #fff;
+      padding: 25px;
+      max-width: 500px;
+      margin: 30px auto;
+      border-radius: 10px;
+      text-align: left;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .details-box p {
+      margin: 10px 0;
+    }
+
+    .confirm-button {
+      background-color: #005baa;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .confirm-button:hover {
+      background-color: #003366;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top navigation -->
+  <div class="top-bar">
+    <span>https://MEP.edu.co</span>
+    <input type="text" placeholder="Buscar..." style="padding:5px; border-radius:5px;">
+  </div>
+
+  <!-- Encabezado -->
+  <div class="navbar">
+    <h1>MEP - Matrículas y Educación pública</h1>
+  </div>
+
+  <!-- Navegación -->
+  <div class="nav-links">
+    <a href="#">Preguntas Frecuentes</a>
+    <a href="#">Ayuda</a>
+    <a href="#">Contáctanos</a>
+  </div>
+
+  <!-- Contenido -->
+  <div class="container">
+    <div class="check-icon">✔️</div>
+    <h2>Confirma tu cita</h2>
+
+    <div class="details-box" id="detalle-cita">
+      <!-- Se rellena con JavaScript -->
+    </div>
+
+    <a href="confirmagenda.HTML" class="btn"><button class="confirm-button" onclick="alert('¡Cita agendada exitosamente!')">Agendar</button></a>
+  </div>
+
+  <script>
+    const datos = JSON.parse(localStorage.getItem("citaMEP"));
+
+    if (datos) {
+      document.getElementById("detalle-cita").innerHTML = `
+        <p><strong>Fecha:</strong> ${datos.fecha}</p>
+        <p><strong>Hora:</strong> ${datos.hora}</p>
+        <p><strong>Colegio:</strong> ${datos.colegio}</p>
+        <p><strong>Dirección:</strong> ${datos.direccion}</p>
+        <p><strong>Jornada:</strong> ${datos.jornada}</p>
+        <p><strong>Grado:</strong> ${datos.grado}</p>
+        <p><strong>Cantidad de estudiantes:</strong> ${datos.cantidad}</p>
+        <p><strong>Tipo de cita:</strong> ${datos.tipoCita}</p>
+      `;
+    } else {
+      document.getElementById("detalle-cita").innerHTML = `<p>No hay datos de cita disponibles.</p>`;
+    }
+  </script>
+
+</body>
+</html>

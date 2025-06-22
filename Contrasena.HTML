@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crear Contraseña - MEP</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      background-color: #003366;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 400px;
+      background: white;
+      padding: 30px;
+      margin: 40px auto;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .submit-button {
+      background-color: #005baa;
+      color: white;
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .submit-button:hover {
+      background-color: #003366;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <h1>MEP - Matriculas y Educación Pública</h1>
+  </div>
+
+  <div class="container">
+    <h2>Crea tu Contraseña</h2>
+    <form action="guardar_contrasena.php" method="POST">
+      <div class="form-group">
+        <label for="contrasena">Contraseña</label>
+        <input type="password" id="contrasena" name="contrasena" required>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmar">Confirmar contraseña</label>
+        <input type="password" id="confirmar" name="confirmar" required>
+      </div>
+
+      <button type="submit" class="submit-button">Continuar</button>
+    </form>
+  </div>
+
+</body>
+</html>

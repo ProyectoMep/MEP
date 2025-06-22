@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEP - Matrículas y Educación Pública</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+
+        /* Encabezado con logo */
+        .navbar {
+            background-color: #003366;
+            color: white;
+            text-align: center;
+            padding: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .navbar img {
+            width: 200px; /* Tamaño del logo */
+            margin-right: 15px;
+        }
+
+        .navbar h1 {
+            font-size: 22px;
+            margin: 0;
+        }
+
+        /* Menú de navegación */
+        .nav-links {
+            display: flex;
+            justify-content: left;
+            padding: 10px;
+            background-color: #005baa;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+        }
+
+        .nav-links a:hover {
+            background-color: #003366;
+        }
+
+        /* Contenedor Principal */
+        .container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        /* Imagen educativa */
+        .main-content {
+            flex: 3;
+            background-color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        /* Sección de usuario */
+        .user-section {
+            flex: 1;
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            margin-left: 20px;
+        }
+
+        .user-section img {
+            width: 350px;
+            height: 350px;
+            border-radius: 45%;
+        }
+
+        .user-section button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #005baa;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .user-section button:hover {
+            background-color: #003366;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Encabezado con logo -->
+    <div class="navbar">
+        <img src="logo png.png" alt="Logo MEP"> 
+        <h1>MEP - Matrículas y Educación Pública</h1>
+    </div>
+
+    <!-- Menú de navegación -->
+    <div class="nav-links">
+        <a href="#">Preguntas Frecuentes</a>
+        <a href="#">Ayuda</a>
+        <a href="#">Contáctanos</a>
+    </div>
+
+    <!-- Contenido Principal -->
+    <div class="container">
+        <div class="main-content">
+            <img src="ninos.jpg" alt="Imagen Educativa">
+        </div>
+
+        <!-- Sección de usuario -->
+        <div class="user-section">
+            <img src="usuario.png" alt="Usuario">
+            <a href="inciosesion.HTML" class="btn"><button>Iniciar Sesión</button></a>
+            <a href="InterfazU.html" class="btn">  <button>Registrarse</button> </a>
+        </div>
+    </div>
+
+</body>
+</html>

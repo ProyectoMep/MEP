@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Iniciar Sesión - MEP</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    }
+
+    .top-bar {
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      align-items: center;
+    }
+
+    .search-bar {
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .navbar {
+      background-color: #003366;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .navbar img {
+      width: 150px;
+      margin-right: 15px;
+    }
+
+    .navbar h1 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .nav-links {
+      display: flex;
+      justify-content: left;
+      padding: 10px;
+      background-color: #005baa;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      padding: 10px 15px;
+    }
+
+    .nav-links a:hover {
+      background-color: #003366;
+    }
+
+    .login-container {
+      max-width: 400px;
+      background-color: white;
+      margin: 40px auto;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-container img {
+      width: 100px;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .submit-button {
+      background-color: #005baa;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 15px;
+    }
+
+    .submit-button:hover {
+      background-color: #003366;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barra superior -->
+  <div class="top-bar">
+    <span>https://www.MEP.edu.co</span>
+    <input type="text" class="search-bar" placeholder="Buscar...">
+  </div>
+
+  <!-- Encabezado -->
+  <div class="navbar">
+    <img src="logo png.png" alt="Logo MEP">
+    <h1>Logotipo MEP - Matrículas y Educación pública</h1>
+  </div>
+
+  <!-- Enlaces -->
+  <div class="nav-links">
+    <a href="#">Preguntas Frecuentes</a>
+    <a href="#">Ayuda</a>
+    <a href="#">Contáctanos</a>
+  </div>
+
+  <!-- Formulario -->
+  <form class="login-container" action="inicio_sesion.php" method="POST">
+    <img src="usuario2.png" alt="Icono usuario">
+
+    <div class="form-group">
+      <label for="tipoUsuario">Tipo de usuario</label>
+      <select name="tipo" id="tipoUsuario" required>
+        <option value="persona">Persona</option>
+        <option value="institucion">Institución</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="correo">Correo electrónico</label>
+      <input type="email" id="correo" name="correo" placeholder="ejemplo@correo.com" required>
+    </div>
+
+    <div class="form-group">
+      <label for="contraseña">Contraseña</label>
+      <input type="password" id="contraseña" name="contraseña" placeholder="Ingrese su contraseña" required>
+    </div>
+
+    <button type="submit" class="submit-button">Iniciar Sesión</button>
+  </form>
+
+</body>
+</html>

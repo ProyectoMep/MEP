@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Agendamiento de Cita - MEP</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+
+    .top-bar, .nav-links {
+      background-color: #005baa;
+      color: white;
+      padding: 10px;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .search-bar {
+      padding: 5px;
+      border-radius: 5px;
+      border: none;
+    }
+
+    .navbar {
+      background-color: #003366;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin-right: 15px;
+    }
+
+    .main-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      padding: 30px;
+    }
+
+    .form-section {
+      flex: 1;
+      min-width: 300px;
+      margin-right: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    select, input {
+      width: 100%;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .calendar, .hora {
+      margin-top: 10px;
+    }
+
+    .info-section {
+      flex: 1;
+      min-width: 300px;
+      text-align: center;
+    }
+
+    .info-section img {
+      width: 100%;
+      max-width: 300px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+    }
+
+    .info-text {
+      text-align: left;
+      margin-top: 15px;
+      background-color: #eef2f5;
+      padding: 15px;
+      border-radius: 10px;
+    }
+
+    .info-text h3 {
+      margin-bottom: 5px;
+      color: #005baa;
+    }
+
+    .confirm-button {
+      background-color: #005baa;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 5px;
+      font-size: 16px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+
+    .confirm-button:hover {
+      background-color: #003366;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barra superior -->
+  <div class="top-bar">
+    <span>https://MEP.edu.co</span>
+    <input class="search-bar" type="text" placeholder="Buscar...">
+  </div>
+
+  <!-- Encabezado -->
+  <div class="navbar">
+    <h1> MEP - Matrículas y Educación pública</h1>
+  </div>
+
+  <!-- Navegación -->
+  <div class="nav-links">
+    <a href="#">Preguntas Frecuentes</a>
+    <a href="#">Ayuda</a>
+    <a href="#">Contáctanos</a>
+  </div>
+
+  <!-- Contenido principal -->
+  <div class="main-container">
+
+    <!-- Formulario -->
+    <div class="form-section">
+      <div class="form-group">
+        <label for="localidad">Localidad</label>
+        <select id="localidad">
+          <option>Engativá</option>
+          <option>Suba</option>
+          <option>Chapinero</option>
+          <option>Fontibón</option>
+          <option>Usaquén</option>
+          <option>Bosa</option>
+          <option>Kennedy</option>
+          <option>Ciudad Bolívar</option>
+          <option>Teusaquillo</option>
+          <option>Puente Aranda</option>
+          <option>Antonio Nariño</option>
+          <option>Santa Fe</option>
+          <option>Usme</option>
+          <option>Tunjuelito</option>
+          <option>San Cristóbal</option>
+          <option>Los Mártires</option>
+          <option>La Candelaria</option>
+          <option>Rafael Uribe Uribe</option>
+          <option>Barrios Unidos</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="institucion">Institución</label>
+        <select id="institucion" onchange="mostrarInfo()">
+          <option value="COL NACIONES UNIDAS (IED)">COL NACIONES UNIDAS (IED)</option>
+          <option value="COL NESTOR FORERO ALCALA (IED)">COL NESTOR FORERO ALCALA (IED)</option>
+          <option value="COL NIDIA QUINTERO DE TURBAY (IED)">COL NIDIA QUINTERO DE TURBAY (IED)</option>
+          <option value="COL NUEVA CONSTITUCION (IED)">COL NUEVA CONSTITUCION (IED)</option>
+          <option value="COL REPUBLICA DE CHINA (IED)">COL REPUBLICA DE CHINA (IED)</option>
+          <option value="COL REPUBLICA DE COLOMBIA (IED)">COL REPUBLICA DE COLOMBIA (IED)</option>
+          <option value="COL ROBERT F KENNEDY">COL ROBERT F KENNEDY</option>
+          <option value="COL RODOLFO LLINAS">COL RODOLFO LLINAS</option>
+          <option value="COL SAN JOSE NORTE (IED)">COL SAN JOSE NORTE (IED)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="tipo">Tipo de cita</label>
+        <select id="tipo">
+          <option>Proceso de Matrícula</option>
+          <option>Entrega de Documentos</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="jornada">Jornada</label>
+        <select id="jornada">
+          <option>Mañana</option>
+          <option>Tarde</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="grado">Grado</label>
+        <select id="grado">
+            <option>Primero</option>
+          <option>Segundo</option>
+          <option>Tercero</option>
+          <option>Cuarto</option>
+          <option>Quinto</option>
+          <option>Sexto</option>
+          <option>Séptimo</option>
+          <option>Octavo</option>
+          <option>Noveno</option>
+          <option>Décimo</option>
+          <option>Once</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="sede">Sede</label>
+        <select id="sede">
+          <option>A</option>
+          <option>B</option>
+          <option>C</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="cantidad">Cantidad de estudiantes</label>
+        <select id="cantidad">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+      </div>
+
+      <div class="form-group calendar">
+        <label for="fecha">Fecha</label>
+        <input type="date" id="fecha">
+      </div>
+
+      <div class="form-group hora">
+        <label for="hora">Hora</label>
+        <select id="hora">
+          <option>08:00 AM</option>
+          <option>09:00 AM</option>
+          <option>10:00 AM</option>
+          <option>11:00 AM</option>
+          <option>02:00 PM</option>
+          <option>03:00 PM</option>
+        </select>
+      </div>
+
+      <a href="confirmarcita.HTML" class="btn"><button class="confirm-button" onclick="guardarDatosYCambiar()">CONFIRMAR CITA</button></a>
+
+    </div>
+
+    <!-- Info institucional -->
+    <div class="info-section">
+      <img id="imagen-colegio" src="img/colegios/colegio1.jpeg" alt="Imagen del colegio">
+      <div class="info-text" id="datos-colegio">
+        <h3>Dirección:</h3>
+        <p id="direccion">CL 73 BIS # 68G - 27</p>
+        <h3>Teléfono:</h3>
+        <p id="telefono">2502506</p>
+        <h3>Correo:</h3>
+        <p id="correo">escdinacionesunida10@redp.edu.co</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script para cambiar info del colegio -->
+  <script>
+    const infoColegios = {
+      "COL NACIONES UNIDAS (IED)": {
+        direccion: "CL 73 BIS # 68G - 27",
+        telefono: "2502506",
+        correo: "escdinacionesunida10@redp.edu.co",
+        imagen: "colegio1.jpeg"
+      },
+      "COL NESTOR FORERO ALCALA (IED)": {
+        direccion: "KR 70C BIS # 71-33",
+        telefono: "2245800",
+        correo: "coldinestorforeroa10@redp.edu.co",
+        imagen: "colegio2.jpeg"
+      },
+      "COL NIDIA QUINTERO DE TURBAY (IED)": {
+        direccion: "CLL. 75 # 90-75",
+        telefono: "2523450",
+        correo: "colnanidyaquintero10@redp.edu.co",
+        imagen: "colegio3.jpeg"
+      },
+      "COL NUEVA CONSTITUCION (IED)": {
+        direccion: "KR 107B # 74B-31",
+        telefono: "4314351",
+        correo: "cednvaconstitucio10@redp.edu.co",
+        imagen: "colegio4.jpeg"
+      },
+      "COL REPUBLICA DE CHINA (IED)": {
+        direccion: "KR 92 # 82-20",
+        telefono: "2521154",
+        correo: "escdirepdechina10@redp.edu.co",
+        imagen: "colegio5.jpeg"
+      },
+      "COL REPUBLICA DE COLOMBIA (IED)": {
+        direccion: "CLL. 68 # 69-10",
+        telefono: "2319931",
+        correo: "coldirepdecolombia10@redp.edu.co",
+        imagen: "colegio6.jpeg"
+      },
+      "COL ROBERT F KENNEDY": {
+        direccion: "AV. BOYACA 64H-39",
+        telefono: "2519559",
+        correo: "escdirobertkennedy10@redp.edu.co",
+        imagen: "colegio7.jpeg"
+      },
+      "COL RODOLFO LLINAS": {
+        direccion: "KR 103D # 86A - 72",
+        telefono: "2291625",
+        correo: "cedbolivia10@redp.edu.co",
+        imagen: "colegio8.jpeg"
+      },
+      "COL SAN JOSE NORTE (IED)": {
+        direccion: "KR 84 # 75A-094",
+        telefono: "N/A",
+        correo: "N/A",
+        imagen: "colegio9.jpeg"
+      }
+    };
+
+    function mostrarInfo() {
+      const seleccion = document.getElementById("institucion").value;
+      const colegio = infoColegios[seleccion];
+
+      document.getElementById("imagen-colegio").src = `img/colegios/${colegio.imagen}`;
+      document.getElementById("direccion").textContent = colegio.direccion;
+      document.getElementById("telefono").textContent = colegio.telefono;
+      document.getElementById("correo").textContent = colegio.correo;
+    }
+
+    window.onload = mostrarInfo;
+  </script>
+<!-- Script para redirigir y guardar la cita -->
+<script>
+    function guardarDatosYCambiar() {
+      const institucion = document.getElementById("institucion").value;
+      const colegioInfo = infoColegios[institucion];
+  
+      const datos = {
+        fecha: document.getElementById("fecha").value,
+        hora: document.getElementById("hora").value,
+        colegio: institucion,
+        direccion: colegioInfo.direccion,
+        jornada: document.getElementById("jornada").value,
+        grado: document.getElementById("grado").value,
+        cantidad: document.getElementById("cantidad").value,
+        tipoCita: document.getElementById("tipo").value
+      };
+  
+      localStorage.setItem("citaMEP", JSON.stringify(datos));
+      window.location.href = "confirmacion.html"; // Redirige a la pantalla de confirmación
+    }
+  </script>
+</body>
+</html>

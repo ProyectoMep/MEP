@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Éxito - MEP</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #ffffff;
+    }
+
+    .top-bar, .nav-links {
+      background-color: #005baa;
+      color: white;
+      padding: 10px;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .search-bar {
+      padding: 5px;
+      border-radius: 5px;
+      border: none;
+    }
+
+    .navbar {
+      background-color: #003366;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin-right: 15px;
+    }
+
+    .success-container {
+      text-align: center;
+      padding: 100px 20px;
+    }
+
+    .check-icon {
+      font-size: 50px;
+      color: green;
+      margin-bottom: 10px;
+    }
+
+    .success-message {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+
+    .continue-button {
+      padding: 12px 30px;
+      font-size: 16px;
+      background-color: #005baa;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .continue-button:hover {
+      background-color: #003366;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barra superior -->
+  <div class="top-bar">
+    <span>https://MEP.edu.co</span>
+    <input class="search-bar" type="text" placeholder="Buscar...">
+  </div>
+
+  <!-- Encabezado -->
+  <div class="navbar">
+    <h1>MEP - Matrículas y Educación pública</h1>
+  </div>
+
+  <!-- Navegación -->
+  <div class="nav-links">
+    <a href="#">Preguntas Frecuentes</a>
+    <a href="#">Ayuda</a>
+    <a href="#">Contáctanos</a>
+  </div>
+
+  <!-- Contenido principal -->
+  <div class="success-container">
+    <div class="check-icon">✔️</div>
+    <div class="success-message">Cita agendada exitosamente</div>
+    <a href="InterfazPu.HTML" class="btn"> <button class="continue-button" onclick="window.location.href='index.htmlIN'">Continuar</button></a>
+  </div>
+
+</body>
+</html>
