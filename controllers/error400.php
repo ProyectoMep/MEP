@@ -9,7 +9,7 @@ http_response_code(400);
     <title>Error 400</title>
 </head>
 <body>
-    <h1>Error 400 - Solicitud incorrecta</h1>
-    <p>No se pudo procesar la solicitud debido a un error del cliente.</p>
+   <center> <h1>Error 400 - Solicitud incorrecta</h1> 
+    <p>No se pudo procesar la solicitud debido a un error del cliente.</p></center>
 </body>
 </html>

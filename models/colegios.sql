@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-04-2025 a las 01:58:40
+-- Tiempo de generación: 26-06-2025 a las 20:46:43
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -699,41 +699,51 @@ INSERT INTO `sede_jornada` (`id_sede`, `id_jornada`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuarios`
+-- Estructura de tabla para la tabla `usuario`
 --
 
-CREATE TABLE `usuarios` (
-  `id_usuario` bigint(20) NOT NULL,
-  `nombre` varchar(50) DEFAULT NULL,
-  `apellido` varchar(50) DEFAULT NULL,
-  `telefono` varchar(20) DEFAULT NULL,
-  `correo` varchar(100) DEFAULT NULL,
-  `contraseña` text DEFAULT NULL,
-  `id_rol` int(11) DEFAULT NULL,
-  `id_colegio` bigint(20) DEFAULT NULL
+CREATE TABLE `usuario` (
+  `id_usuario` int(11) NOT NULL,
+  `tipo_documento` enum('Cédula de Ciudadanía','Cédula de Extranjería','Tarjeta de Identidad','Pasaporte') NOT NULL,
+  `numero_documento` varchar(20) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `apellido` varchar(50) NOT NULL,
+  `telefono` varchar(20) NOT NULL,
+  `correo` varchar(100) NOT NULL,
+  `contrasena` varchar(100) DEFAULT NULL,
+  `id_rol` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `usuarios`
+-- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuarios` (`id_usuario`, `nombre`, `apellido`, `telefono`, `correo`, `contraseña`, `id_rol`, `id_colegio`) VALUES
-(16502748, 'Valentina', 'Ruiz', '3435796853', 'valentina.ruiz@gmail.com', 'G4oc*bLE', 1, NULL),
-(22072733, 'Luis', 'Rodríguez', '3521708921', 'luis.rodríguez@gmail.com', 'Ei3s751E', 2, NULL),
-(26295789, 'Diego', 'Castaño', '3636962776', 'diego.castao@gmail.com', 'JTwhZm8I', 3, NULL),
-(38511548, 'Jorge', 'Herrera', '3688099697', 'jorge.herrera@gmail.com', '5MwS7CFb', NULL, NULL),
-(40027938, 'María', 'Gómez', '3969076877', 'maría.gómez@gmail.com', 'J#DbF$^J', NULL, NULL),
-(61399096, 'Laura', 'Sánchez', '3569147643', 'laura.sánchez@gmail.com', 'bpPH2^RU', NULL, NULL),
-(69235495, 'Camilo', 'Salazar', '3444320818', 'camilo.salazar@gmail.com', 'GoYfiaio', NULL, NULL),
-(80058402, 'Lucía', 'Castro', '3521920128', 'lucía.castro@gmail.com', 'GVAAG^sw', NULL, NULL),
-(80913234, 'Natalia', 'Rojas', '3926581621', 'natalia.rojas@gmail.com', 'GIcBOMyl', NULL, NULL),
-(80978249, 'Sebastián', 'Vargas', '3399268536', 'sebastián.vargas@gmail.com', 'zM8vV$O#', NULL, NULL),
-(83616234, 'Pedro', 'Martínez', '3276725190', 'pedro.martínez@gmail.com', '&OPAZuV#', NULL, NULL),
-(92567890, 'Andrés', 'Vargas', '3104567890', 'andres.vargas@correo.com', NULL, 3, 111001035521),
-(92694389, 'Carlos', 'Pérez', '3451380024', 'carlos.pérez@gmail.com', 'o@%7VFRf', NULL, NULL),
-(93887897, 'Andrés', 'Romero', '3946635163', 'andrés.romero@gmail.com', '&yomAo#L', NULL, NULL),
-(96273904, 'Claudia', 'Díaz', '3346768724', 'claudia.díaz@gmail.com', '3rcqU1yX', NULL, NULL),
-(96459608, 'Ana', 'Torres', '3497200366', 'ana.torres@gmail.com', 'S@Zl%BWn', 3, NULL);
+INSERT INTO `usuario` (`id_usuario`, `tipo_documento`, `numero_documento`, `nombre`, `apellido`, `telefono`, `correo`, `contrasena`, `id_rol`) VALUES
+(76, 'Cédula de Ciudadanía', '10001234', 'Juan', 'Pérez', '3200000000', 'juan.pérez@gmail.com', 'Clave1!', 3),
+(77, 'Tarjeta de Identidad', '10004567', 'Laura', 'Gómez', '3200000001', 'laura.gómez@gmail.com', 'Clave2!', 3),
+(78, 'Cédula de Ciudadanía', '10007890', 'Carlos', 'Ramírez', '3200000002', 'carlos.ramírez@gmail.com', 'Clave3!', 3),
+(79, 'Cédula de Extranjería', '10012345', 'Ana', 'Martínez', '3200000003', 'ana.martínez@gmail.com', 'Clave4!', 3),
+(80, 'Cédula de Ciudadanía', '10015678', 'Luis', 'Torres', '3200000004', 'luis.torres@gmail.com', 'Clave5!', 3),
+(81, 'Tarjeta de Identidad', '10018901', 'Camila', 'López', '3200000005', 'camila.lópez@gmail.com', 'Clave6!', 3),
+(82, 'Cédula de Ciudadanía', '10021234', 'David', 'Rojas', '3200000006', 'david.rojas@gmail.com', 'Clave7!', 3),
+(83, 'Cédula de Extranjería', '10024567', 'María', 'Hernández', '3200000007', 'maría.hernández@gmail.com', 'Clave8!', 3),
+(84, 'Cédula de Ciudadanía', '10027890', 'Andrés', 'Castro', '3200000008', 'andrés.castro@gmail.com', 'Clave9!', 3),
+(85, 'Tarjeta de Identidad', '10032345', 'Daniela', 'Moreno', '3200000009', 'daniela.moreno@gmail.com', 'Clave10!', 3),
+(86, 'Cédula de Ciudadanía', '10035678', 'Pedro', 'García', '3200000010', 'pedro.garcía@gmail.com', 'Clave11!', 3),
+(87, 'Cédula de Ciudadanía', '10038901', 'Mónica', 'Cárdenas', '3200000011', 'mónica.cárdenas@gmail.com', 'Clave12!', 3),
+(88, 'Tarjeta de Identidad', '10041234', 'Santiago', 'Mora', '3200000012', 'santiago.mora@gmail.com', 'Clave13!', 3),
+(89, 'Cédula de Extranjería', '10044567', 'Paula', 'Silva', '3200000013', 'paula.silva@gmail.com', 'Clave14!', 3),
+(90, 'Cédula de Ciudadanía', '10047890', 'Jorge', 'Luna', '3200000014', 'jorge.luna@gmail.com', 'Clave15!', 3),
+(91, 'Tarjeta de Identidad', '10052345', 'Luisa', 'Navarro', '3200000015', 'luisa.navarro@gmail.com', 'Clave16!', 3),
+(92, 'Cédula de Ciudadanía', '10055678', 'Mateo', 'Vargas', '3200000016', 'mateo.vargas@gmail.com', 'Clave17!', 3),
+(93, 'Cédula de Ciudadanía', '10058901', 'Natalia', 'Soto', '3200000017', 'natalia.soto@gmail.com', 'Clave18!', 1),
+(94, 'Tarjeta de Identidad', '10061234', 'Tomás', 'Peña', '3200000018', 'tomás.peña@gmail.com', 'Clave19!', 2),
+(95, 'Cédula de Extranjería', '10064567', 'Isabela', 'Montoya', '3200000019', 'isabela.montoya@gmail.com', 'Clave20!', 1),
+(96, 'Cédula de Ciudadanía', '10067890', 'Emilio', 'Bravo', '3200000020', 'emilio.bravo@gmail.com', 'Clave21!', 2),
+(97, 'Tarjeta de Identidad', '10072345', 'Valeria', 'Suárez', '3200000021', 'valeria.suárez@gmail.com', 'Clave22!', 1),
+(98, 'Cédula de Extranjería', '10075678', 'Sebastián', 'Nieto', '3200000022', 'sebastián.nieto@gmail.com', 'Clave23!', 2),
+(99, 'Cédula de Ciudadanía', '10078901', 'Gabriela', 'Pinto', '3200000023', 'gabriela.pinto@gmail.com', 'Clave24!', 1),
+(100, 'Pasaporte', '10081234', 'Ricardo', 'Delgado', '3200000024', 'ricardo.delgado@gmail.com', 'Clave25!', 2);
 
 --
 -- Índices para tablas volcadas
@@ -816,12 +826,13 @@ ALTER TABLE `sede_jornada`
   ADD PRIMARY KEY (`id_sede`,`id_jornada`);
 
 --
--- Indices de la tabla `usuarios`
+-- Indices de la tabla `usuario`
 --
-ALTER TABLE `usuarios`
+ALTER TABLE `usuario`
   ADD PRIMARY KEY (`id_usuario`),
-  ADD KEY `fk_rol_usuario` (`id_rol`),
-  ADD KEY `fk_usuario_colegio` (`id_colegio`);
+  ADD UNIQUE KEY `numero_documento` (`numero_documento`),
+  ADD UNIQUE KEY `numero_documento_2` (`numero_documento`),
+  ADD KEY `fk_usuario_rol` (`id_rol`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -876,6 +887,12 @@ ALTER TABLE `sedes`
   MODIFY `id_sede` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
+-- AUTO_INCREMENT de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+
+--
 -- Restricciones para tablas volcadas
 --
 
@@ -923,11 +940,10 @@ ALTER TABLE `sedes`
   ADD CONSTRAINT `fk_sedes_instituciones` FOREIGN KEY (`id_colegio`) REFERENCES `instituciones` (`Id_Colegio`);
 
 --
--- Filtros para la tabla `usuarios`
+-- Filtros para la tabla `usuario`
 --
-ALTER TABLE `usuarios`
-  ADD CONSTRAINT `fk_rol_usuario` FOREIGN KEY (`id_rol`) REFERENCES `rol` (`id_rol`),
-  ADD CONSTRAINT `fk_usuario_colegio` FOREIGN KEY (`id_colegio`) REFERENCES `instituciones` (`Id_Colegio`);
+ALTER TABLE `usuario`
+  ADD CONSTRAINT `fk_usuario_rol` FOREIGN KEY (`id_rol`) REFERENCES `rol` (`id_rol`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

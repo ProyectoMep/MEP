@@ -6,7 +6,7 @@
   <title>Agendamiento de Cita - MEP</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
       margin: 0;
       background-color: #f4f4f4;
     }
@@ -119,13 +119,6 @@
   </style>
 </head>
 <body>
-
-  <!-- Barra superior -->
-  <div class="top-bar">
-    <span>https://MEP.edu.co</span>
-    <input class="search-bar" type="text" placeholder="Buscar...">
-  </div>
-
   <!-- Encabezado -->
   <div class="navbar">
     <h1> MEP - Matrículas y Educación pública</h1>
@@ -202,17 +195,17 @@
       <div class="form-group">
         <label for="grado">Grado</label>
         <select id="grado">
-            <option>Primero</option>
-          <option>Segundo</option>
-          <option>Tercero</option>
-          <option>Cuarto</option>
-          <option>Quinto</option>
-          <option>Sexto</option>
-          <option>Séptimo</option>
-          <option>Octavo</option>
-          <option>Noveno</option>
-          <option>Décimo</option>
-          <option>Once</option>
+            <option>Primero (1) </option>
+          <option>Segundo (2)</option>
+          <option>Tercero (3)</option>
+          <option>Cuarto (4)</option>
+          <option>Quinto (5)</option>
+          <option>Sexto (6)</option>
+          <option>Séptimo (7)</option>
+          <option>Octavo (8)</option>
+          <option>Noveno (9)</option>
+          <option>Décimo (10)</option>
+          <option>Once (11)</option>
         </select>
       </div>
 
@@ -271,14 +264,14 @@
     </div>
   </div>
 
-  <!-- Script para cambiar info del colegio -->
+  <!-- cambiar info del colegio -->
   <script>
     const infoColegios = {
       "COL NACIONES UNIDAS (IED)": {
         direccion: "CL 73 BIS # 68G - 27",
         telefono: "2502506",
         correo: "escdinacionesunida10@redp.edu.co",
-        imagen: "colegio1.jpeg"
+        imagen: "../AgendarCita/Colegio1.jpeg"
       },
       "COL NESTOR FORERO ALCALA (IED)": {
         direccion: "KR 70C BIS # 71-33",

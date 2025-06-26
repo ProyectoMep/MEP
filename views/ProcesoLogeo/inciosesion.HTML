@@ -7,7 +7,7 @@
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
       background-color: #f4f4f4;
     }
 
@@ -113,15 +113,9 @@
 </head>
 <body>
 
-  <!-- Barra superior -->
-  <div class="top-bar">
-    <span>https://www.MEP.edu.co</span>
-    <input type="text" class="search-bar" placeholder="Buscar...">
-  </div>
-
   <!-- Encabezado -->
   <div class="navbar">
-    <img src="logo png.png" alt="Logo MEP">
+    <img src="/resources/logomep.png" alt="Logo MEP">
     <h1>Logotipo MEP - Matrículas y Educación pública</h1>
   </div>
 
@@ -133,8 +127,8 @@
   </div>
 
   <!-- Formulario -->
-  <form class="login-container" action="inicio_sesion.php" method="POST">
-    <img src="usuario2.png" alt="Icono usuario">
+  <form class="login-container" action="../../controllers/inicio_sesion.PHP" method="POST">
+    <img src="/resources/usuario2.png" alt="Icono usuario">
 
     <div class="form-group">
       <label for="tipoUsuario">Tipo de usuario</label>
@@ -150,8 +144,8 @@
     </div>
 
     <div class="form-group">
-      <label for="contraseña">Contraseña</label>
-      <input type="password" id="contraseña" name="contraseña" placeholder="Ingrese su contraseña" required>
+      <label for="contrasena">contrasña</label>
+      <input type="password" id="contrasena" name="contrasena" placeholder="Ingrese su contraseña" required>
     </div>
 
     <button type="submit" class="submit-button">Iniciar Sesión</button>

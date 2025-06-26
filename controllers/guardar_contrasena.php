@@ -1,54 +1,46 @@
-<?php
-// Conexión a la base de datos
-$conexion = new mysqli("localhost", "root", "", "colegios");
-if ($conexion->connect_error) {
-    die("Error de conexión: " . $conexion->connect_error);
-}
+<?php 
+// Conexión
+include './Conexion.php';
 
-// Obtener los datos del formulario
-$contrasena = $_POST['contrasena'] ?? '';
-$confirmar  = $_POST['confirmar'] ?? '';
+// Obtener datos del formulario
+$numero_documento = trim($_POST['numero_documento'] ?? '');
+$contrasena       = trim($_POST['contrasena'] ?? '');
+$confirmar        = trim($_POST['confirmar'] ?? '');
 
-// Validar que los campos no estén vacíos
-if (empty($contrasena) || empty($confirmar)) {
+// Validar campos vacíos
+if (empty($numero_documento) || empty($contrasena) || empty($confirmar)) {
     echo "<script>alert('Todos los campos son obligatorios.'); window.history.back();</script>";
     exit();
 }
 
-// Validar que las contraseñas coincidan
+// Validar coincidencia de contraseñas
 if ($contrasena !== $confirmar) {
-    echo "<script>alert('❌ Las contraseñas no coinciden.'); window.history.back();</script>";
+    echo "<script>alert('Las contraseñas no coinciden.'); window.history.back();</script>";
     exit();
 }
 
-// (Opcional) Cifrar contraseña con password_hash
-// $contrasena = password_hash($contrasena, PASSWORD_DEFAULT);
+// Guardar la contraseña en texto plano (NO RECOMENDADO para producción)
+$sql = "UPDATE usuario SET contrasena = ? WHERE numero_documento = ?";
+$stmt = $mysqli->prepare($sql);
 
-// Obtener el último usuario registrado
-$sql = "SELECT id_usuario FROM usuarios ORDER BY id_usuario DESC LIMIT 1";
-$resultado = $conexion->query($sql);
+if ($stmt) {
+    $stmt->bind_param("ss", $contrasena, $numero_documento);
 
-if ($resultado && $resultado->num_rows > 0) {
-    $fila = $resultado->fetch_assoc();
-    $ultimo_id = $fila['id_usuario'];
-
-    // Actualizar la contraseña del último usuario
-    $sql_update = "UPDATE usuarios SET contraseña = ? WHERE id_usuario = ?";
-    $stmt = $conexion->prepare($sql_update);
-    $stmt->bind_param("si", $contrasena, $ultimo_id);
-    $stmt->execute();
-
-    if ($stmt->affected_rows > 0) {
-        header("Location: InterfazPu.HTML");
-        exit();
+    if ($stmt->execute()) {
+        echo "<script>
+            alert('Contraseña guardada exitosamente.');
+            window.location.href = '../views/procesoLogeo/RegistroExiU.HTML';
+        </script>";
     } else {
+        error_log("Error al ejecutar el UPDATE: " . $stmt->error);
         echo "<script>alert('Error al guardar la contraseña.'); window.history.back();</script>";
     }
 
     $stmt->close();
 } else {
-    echo "<script>alert('No se encontró ningún usuario para actualizar.'); window.history.back();</script>";
+    error_log("Error en prepare(): " . $mysqli->error);
+    echo "<script>alert('Error interno del servidor.'); window.history.back();</script>";
 }
 
-$conexion->close();
+$mysqli->close();
 ?>

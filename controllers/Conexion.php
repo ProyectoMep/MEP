@@ -1,13 +1,11 @@
-<?php 
+<?php
 
-    /* Se realiza la conexión a la base de datos*/
+/* Se realiza la conexión a la base de datos*/
 
-    $username = "root"; 
+$username = "root";
 
-    $password = ""; 
+$password = "";
 
-    $database = "colegios"; 
+$database = "colegios";
 
-    $mysqli = new mysqli("127.0.0.1", $username, $password, $database); 
-
-?>
+$mysqli = new mysqli("127.0.0.1", $username, $password, $database);

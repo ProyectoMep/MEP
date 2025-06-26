@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Crear Contraseña - MEP</title>
   <style>
     body {
@@ -69,25 +69,40 @@
 <body>
 
   <div class="navbar">
-    <h1>MEP - Matriculas y Educación Pública</h1>
+    <h1>MEP - Matrículas y Educación Pública</h1>
   </div>
 
   <div class="container">
     <h2>Crea tu Contraseña</h2>
-    <form action="guardar_contrasena.php" method="POST">
+
+    <form action="../../controllers/guardar_contrasena.php" method="POST">
+      <!-- Campo oculto para el número de documento (rellenado por JavaScript) -->
+      <input type="hidden" name="numero_documento" id="numero_documento">
+
       <div class="form-group">
         <label for="contrasena">Contraseña</label>
         <input type="password" id="contrasena" name="contrasena" required>
       </div>
 
       <div class="form-group">
-        <label for="confirmar">Confirmar contraseña</label>
+        <label for="confirmar">Confirmar Contraseña</label>
         <input type="password" id="confirmar" name="confirmar" required>
       </div>
 
-      <button type="submit" class="submit-button">Continuar</button>
+      <button type="submit" class="submit-button">Guardar Contraseña</button>
     </form>
   </div>
+
+  <script>
+    // Capturar numero_documento de la URL y asignarlo al campo oculto
+    const params = new URLSearchParams(window.location.search);
+    const doc = params.get('numero_documento');
+    if (doc) {
+      document.getElementById('numero_documento').value = doc;
+    } else {
+      alert("No se recibió el número de documento. Vuelva a registrarse.");
+    }
+  </script>
 
 </body>
 </html>

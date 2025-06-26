@@ -6,7 +6,7 @@
   <title>Panel Usuario - MEP</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
       margin: 0;
       background-color: #ffffff;
     }
@@ -38,7 +38,7 @@
 
     .nav-links {
       display: flex;
-      justify-content: center;
+      justify-content: left;
       gap: 20px;
       background-color: #005baa;
     }
@@ -100,16 +100,9 @@
   </style>
 </head>
 <body>
-
-  <!-- Barra superior -->
-  <div class="top-bar">
-    <span>https://MEP.edu.co</span>
-    <input class="search-bar" type="text" placeholder="buscar">
-  </div>
-
   <!-- Encabezado -->
   <div class="navbar">
-    <img src="logo png.png" alt="Logo MEP" style="height: 60px; vertical-align: middle; margin-right: 15px;">
+    <img src="/resources/logomep.png" alt="Logo MEP" style="height: 60px; vertical-align: middle; margin-right: 15px;">
     <span style="font-size: 24px;">MEP - Matrículas y Educación pública</span>
   </div>
 
@@ -122,17 +115,17 @@
 
   <!-- Opciones del usuario -->
   <div class="dashboard">
-    <a href="Agenda.HTML"><button>AGENDA CITA</button></a>
+    <a href="http://localhost/pagina_web_mep/views/AgendarCita/Agenda.HTML"><button>AGENDA CITA</button></a>
 
     <!-- Requisitos con error 500 -->
-    <a href="error500.php"><button>REQUISITOS</button></a>
+    <a href="http://localhost/pagina_web_mep/controllers/error500.php"><button>REQUISITOS</button></a>
 
     <a href="buscar-colegio.html"><button>ENCUENTRA TU COLEGIO</button></a>
 
     <!-- Eventos con error 400 -->
-    <a href="error400.php"><button>EVENTOS INSTITUCIONALES</button></a>
+    <a href="http://localhost/pagina_web_mep/controllers/error400.php"><button>EVENTOS INSTITUCIONALES</button></a>
 
-    <img src="estudiantes.png" alt="estudiantes">
+    <img src="/resources/estudiantes.png" alt="estudiantes">
 
     <a href="citas-agendadas.html"><button>CITAS AGENDADAS</button></a>
   </div>

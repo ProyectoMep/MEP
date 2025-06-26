@@ -82,7 +82,7 @@ http_response_code(500);
 
   <!-- Encabezado -->
   <div class="navbar">
-    <img src="logo png.png" alt="Logo MEP">
+    <img src="/resources/logomep.png" alt="Logo MEP">
     <h1>MEP - Matrículas y Educación Pública</h1>
   </div>
 
