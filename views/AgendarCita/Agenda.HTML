@@ -271,7 +271,7 @@
         direccion: "CL 73 BIS # 68G - 27",
         telefono: "2502506",
         correo: "escdinacionesunida10@redp.edu.co",
-        imagen: "../AgendarCita/Colegio1.jpeg"
+        imagen: "colegio1.jpeg"
       },
       "COL NESTOR FORERO ALCALA (IED)": {
         direccion: "KR 70C BIS # 71-33",
@@ -327,7 +327,7 @@
       const seleccion = document.getElementById("institucion").value;
       const colegio = infoColegios[seleccion];
 
-      document.getElementById("imagen-colegio").src = `img/colegios/${colegio.imagen}`;
+      document.getElementById("imagen-colegio").src = `../../resources/img/colegios/${colegio.imagen}`;
       document.getElementById("direccion").textContent = colegio.direccion;
       document.getElementById("telefono").textContent = colegio.telefono;
       document.getElementById("correo").textContent = colegio.correo;
