@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reprogramar Cita - MEP</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #003366;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 40px auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    input[readonly] {
+      background-color: #eee;
+    }
+
+    .submit-btn {
+      background-color: #005baa;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .submit-btn:hover {
+      background-color: #003366;
+    }
+
+    .volver-btn {
+      margin-top: 20px;
+      background-color: #ccc;
+      color: black;
+      border: none;
+      padding: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <header>Reprogramar Cita</header>
+
+  <div class="container">
+    <form id="form-reprogramar">
+      <input type="hidden" id="id_cita" name="id_cita">
+
+      <label>Colegio</label>
+      <input type="text" id="nombre_institucion" readonly>
+
+      <label>Dirección</label>
+      <input type="text" id="direccion_sede" readonly>
+
+      <label for="fecha_cita">Nueva Fecha</label>
+      <input type="date" id="fecha_cita" name="fecha_cita" required>
+
+      <label for="hora_cita">Nueva Hora</label>
+      <select id="hora_cita" name="hora_cita" required></select>
+
+      <button type="submit" class="submit-btn">Confirmar Reprogramación</button>
+    </form>
+
+    <button class="volver-btn" onclick="history.back()">Cancelar y Volver</button>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const idCita = params.get("id");
+    if (!idCita) {
+      alert("ID de cita no especificado.");
+      history.back();
+    }
+
+    document.getElementById('id_cita').value = idCita;
+
+    // Obtener info actual
+    fetch(`../../controllers/cargar_cita.php?id=${idCita}`)
+      .then(res => res.json())
+      .then(data => {
+        if (!data.success) {
+          alert("No se pudo cargar la cita.");
+          history.back();
+        }
+
+        document.getElementById('nombre_institucion').value = data.cita.nombre_institucion;
+        document.getElementById('direccion_sede').value = data.cita.direccion_sede;
+      });
+
+    // Limitar fechas
+    const fechaInput = document.getElementById('fecha_cita');
+    const hoy = new Date();
+
+    function siguienteHabil(fecha) {
+      const dia = new Date(fecha);
+      dia.setDate(dia.getDate() + 1);
+      while (dia.getDay() === 0 || dia.getDay() === 6) {
+        dia.setDate(dia.getDate() + 1);
+      }
+      return dia;
+    }
+
+    const minFecha = siguienteHabil(hoy).toISOString().split('T')[0];
+    fechaInput.min = minFecha;
+    fechaInput.value = minFecha;
+
+    fechaInput.addEventListener('input', () => {
+      const dia = new Date(fechaInput.value).getDay();
+      if (dia === 0 || dia === 6) {
+        alert("Solo puedes seleccionar días de lunes a viernes.");
+        fechaInput.value = minFecha;
+      }
+    });
+
+    // Horarios disponibles
+    const horaSelect = document.getElementById('hora_cita');
+    function cargarHorarios() {
+      const opciones = [];
+      for (let h = 7; h <= 15; h++) {
+        ["00", "30"].forEach(min => {
+          opciones.push(`${h.toString().padStart(2, '0')}:${min}`);
+        });
+      }
+      horaSelect.innerHTML = opciones.map(h => `<option value="${h}">${h}</option>`).join('');
+    }
+    cargarHorarios();
+
+    // Envío del formulario
+    document.getElementById('form-reprogramar').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      fetch('../../controllers/reprogramar_cita.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          alert("Cita reprogramada correctamente.");
+          window.location.href = "citasAgendadas.html";
+        } else {
+          alert("Error: " + (data.mensaje || "No se pudo reprogramar."));
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

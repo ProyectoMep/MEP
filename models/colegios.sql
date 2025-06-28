@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-06-2025 a las 20:46:43
+-- Tiempo de generación: 28-06-2025 a las 23:54:07
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -77,42 +77,49 @@ DELIMITER ;
 --
 
 CREATE TABLE `citas` (
-  `id_cita` bigint(20) UNSIGNED NOT NULL,
+  `id_cita` int(11) NOT NULL,
   `fecha_cita` date NOT NULL,
   `hora_cita` time NOT NULL,
-  `nombre_agenda` varchar(100) NOT NULL,
-  `correo_agenda` varchar(100) DEFAULT NULL,
-  `telefono_agenda` varchar(20) DEFAULT NULL,
-  `cantidad_citas` int(11) NOT NULL,
-  `id_colegio` bigint(20) NOT NULL,
+  `usuario_agenda` varchar(100) NOT NULL,
+  `correo_agenda` varchar(150) NOT NULL,
+  `estado_cita` varchar(50) NOT NULL,
+  `id_institucion` int(11) NOT NULL,
+  `nombre_institucion` varchar(150) NOT NULL,
   `id_sede` int(11) NOT NULL,
-  `estado` varchar(20) DEFAULT NULL CHECK (`estado` in ('Cancelada','Reprogramada','Asistió','Pendiente asistir'))
+  `direccion_sede` varchar(200) NOT NULL,
+  `documento_usuario` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `citas`
 --
 
-INSERT INTO `citas` (`id_cita`, `fecha_cita`, `hora_cita`, `nombre_agenda`, `correo_agenda`, `telefono_agenda`, `cantidad_citas`, `id_colegio`, `id_sede`, `estado`) VALUES
-(1, '2025-04-07', '15:30:00', 'Carlos Pérez', 'carlos.pérez@gmail.com', '3451380024', 3, 111001086720, 12, 'Pendiente asistir'),
-(2, '2025-04-29', '09:00:00', 'María Gómez', 'maría.gómez@gmail.com', '3969076877', 4, 111001035521, 1, 'Pendiente asistir'),
-(3, '2025-04-16', '15:00:00', 'Luis Rodríguez', 'luis.rodríguez@gmail.com', '3521708921', 2, 111001035521, 2, 'Asistió'),
-(4, '2025-04-11', '12:00:00', 'Ana Torres', 'ana.torres@gmail.com', '3497200366', 1, 111001086720, 12, 'Reprogramada'),
-(5, '2025-04-29', '09:00:00', 'Pedro Martínez', 'pedro.martínez@gmail.com', '3276725190', 2, 111001013811, 24, 'Reprogramada'),
-(6, '2025-04-25', '16:30:00', 'Laura Sánchez', 'laura.sánchez@gmail.com', '3569147643', 1, 111001035521, 1, 'Cancelada'),
-(7, '2025-04-22', '10:30:00', 'Andrés Romero', 'andrés.romero@gmail.com', '3946635163', 1, 111001104388, 5, 'Cancelada'),
-(8, '2025-04-19', '10:30:00', 'Claudia Díaz', 'claudia.díaz@gmail.com', '3346768724', 4, 111001035521, 2, 'Cancelada'),
-(9, '2025-04-16', '12:00:00', 'Jorge Herrera', 'jorge.herrera@gmail.com', '3688099697', 4, 111001107069, 7, 'Cancelada'),
-(10, '2025-04-22', '12:00:00', 'Lucía Castro', 'lucía.castro@gmail.com', '3521920128', 1, 111265000408, 4, 'Pendiente asistir'),
-(11, '2025-04-16', '16:30:00', 'Sebastián Vargas', 'sebastián.vargas@gmail.com', '3399268536', 1, 111001012602, 18, 'Cancelada'),
-(12, '2025-05-05', '12:00:00', 'Natalia Rojas', 'natalia.rojas@gmail.com', '3926581621', 3, 111001107069, 7, 'Pendiente asistir'),
-(13, '2025-04-11', '15:00:00', 'Diego Castaño', 'diego.castaño@gmail.com', '3636962776', 1, 111001035572, 27, 'Asistió'),
-(14, '2025-05-03', '15:00:00', 'Valentina Ruiz', 'valentina.ruiz@gmail.com', '3435796853', 1, 111001035572, 26, 'Asistió'),
-(15, '2025-05-05', '15:30:00', 'Camilo Salazar', 'camilo.salazar@gmail.com', '3444320818', 2, 111001107069, 7, 'Pendiente asistir'),
-(16, '2025-04-10', '10:30:00', 'Juan Pérez', 'juan.perez@gmail.com', '3124567890', 2, 111001035521, 5, 'Pendiente asistir'),
-(17, '2025-04-15', '10:00:00', 'Laura Sánchez', 'laura.sanchez@correo.com', '3015678901', 2, 111001035521, 3, 'Pendiente asistir'),
-(18, '2025-04-20', '09:00:00', 'María Fernanda', 'maria.fernanda@correo.com', '3124567890', 1, 111001035521, 3, 'Pendiente asistir'),
-(19, '2025-04-11', '11:00:00', 'Karen Romero', 'Karen.romero@correo.com', '3119876543', 2, 111001035521, 3, 'Pendiente asistir');
+INSERT INTO `citas` (`id_cita`, `fecha_cita`, `hora_cita`, `usuario_agenda`, `correo_agenda`, `estado_cita`, `id_institucion`, `nombre_institucion`, `id_sede`, `direccion_sede`, `documento_usuario`) VALUES
+(51, '2025-07-13', '16:00:00', 'Andrés Castro', 'andrés.castro@gmail.com', 'Reprogramada', 2147483647, 'COLEGIO ANDRES BELLO', 16, 'Calle 100 # 89-24', '10027890'),
+(52, '2025-07-22', '13:30:00', 'Daniela Moreno', 'daniela.moreno@gmail.com', 'Confirmada', 2147483647, 'COLEGIO LICEO FEMENINO DE CUNDINAMARCA MERCEDES NARIÑO', 16, 'Calle 100 # 89-24', '10032345'),
+(53, '2025-07-01', '13:00:00', 'Andrés Castro', 'andrés.castro@gmail.com', 'Cancelada', 2147483647, 'COLEGIO ATANASIO GIRARDOT (IED)', 16, 'Calle 100 # 89-24', '10027890'),
+(54, '2025-07-03', '16:00:00', 'Daniela Moreno', 'daniela.moreno@gmail.com', 'Confirmada', 2147483647, 'COLEGIO ANDRES BELLO', 18, 'Carrera 30 # 45-67', '10032345'),
+(55, '2025-07-28', '15:00:00', 'Carlos Ramírez', 'carlos.ramírez@gmail.com', 'Cancelada', 2147483647, 'COLEGIO GUILLERMO LEON VALENCIA (IED)', 15, 'Carrera 9 # 94A-24', '10007890'),
+(56, '2025-07-19', '09:00:00', 'David Rojas', 'david.rojas@gmail.com', 'Pendiente', 2147483647, 'COLEGIO LICEO FEMENINO DE CUNDINAMARCA MERCEDES NARIÑO', 18, 'Carrera 30 # 45-67', '10021234'),
+(57, '2025-07-14', '11:30:00', 'Camila López', 'camila.lópez@gmail.com', 'Reprogramada', 2147483647, 'COLEGIO GUILLERMO LEON VALENCIA (IED)', 13, 'Calle 72 # 10-34', '10018901'),
+(58, '2025-07-17', '09:00:00', 'Carlos Ramírez', 'carlos.ramírez@gmail.com', 'Pendiente', 2147483647, 'COLEGIO ATANASIO GIRARDOT (IED)', 13, 'Calle 72 # 10-34', '10007890'),
+(59, '2025-07-15', '11:30:00', 'Pedro García', 'pedro.garcía@gmail.com', 'Pendiente', 2147483647, 'COLEGIO LICEO FEMENINO DE CUNDINAMARCA MERCEDES NARIÑO', 18, 'Carrera 30 # 45-67', '10035678'),
+(60, '2025-07-21', '08:00:00', 'Luis Torres', 'luis.torres@gmail.com', 'Pendiente', 2147483647, 'COLEGIO ATANASIO GIRARDOT (IED)', 15, 'Carrera 9 # 94A-24', '10015678'),
+(61, '2025-07-12', '11:30:00', 'Ana Martínez', 'ana.martínez@gmail.com', 'Reprogramada', 2147483647, 'COLEGIO LICEO FEMENINO DE CUNDINAMARCA MERCEDES NARIÑO', 15, 'Carrera 9 # 94A-24', '10012345'),
+(62, '2025-07-11', '10:00:00', 'Pedro García', 'pedro.garcía@gmail.com', 'Pendiente', 2147483647, 'COLEGIO ATANASIO GIRARDOT (IED)', 15, 'Carrera 9 # 94A-24', '10035678'),
+(63, '2025-07-04', '13:30:00', 'Pedro García', 'pedro.garcía@gmail.com', 'Pendiente', 2147483647, 'COLEGIO GUILLERMO LEON VALENCIA (IED)', 15, 'Carrera 9 # 94A-24', '10035678'),
+(64, '2025-07-06', '08:30:00', 'Laura Gómez', 'laura.gómez@gmail.com', 'Confirmada', 2147483647, 'COLEGIO LICEO FEMENINO DE CUNDINAMARCA MERCEDES NARIÑO', 18, 'Carrera 30 # 45-67', '10004567'),
+(65, '2025-07-27', '09:00:00', 'Camila López', 'camila.lópez@gmail.com', 'Reprogramada', 2147483647, 'COLEGIO ANDRES BELLO', 15, 'Carrera 9 # 94A-24', '10018901'),
+(66, '2025-07-10', '14:00:00', 'Juan Pérez', 'juan.pérez@gmail.com', 'Pendiente', 2147483647, 'COLEGIO GUILLERMO LEON VALENCIA (IED)', 16, 'Calle 100 # 89-24', '10001234'),
+(67, '2025-07-24', '11:30:00', 'Luis Torres', 'luis.torres@gmail.com', 'Reprogramada', 2147483647, 'COLEGIO GUILLERMO LEON VALENCIA (IED)', 15, 'Carrera 9 # 94A-24', '10015678'),
+(68, '2025-07-07', '15:00:00', 'Juan Pérez', 'juan.pérez@gmail.com', 'Cancelada', 2147483647, 'COLEGIO GUILLERMO LEON VALENCIA (IED)', 13, 'Calle 72 # 10-34', '10001234'),
+(69, '2025-07-20', '09:30:00', 'Carlos Ramírez', 'carlos.ramírez@gmail.com', 'Confirmada', 2147483647, 'COLEGIO GUILLERMO LEON VALENCIA (IED)', 16, 'Calle 100 # 89-24', '10007890'),
+(70, '2025-07-08', '08:00:00', 'Andrés Castro', 'andrés.castro@gmail.com', 'Confirmada', 2147483647, 'COLEGIO GUILLERMO LEON VALENCIA (IED)', 16, 'Calle 100 # 89-24', '10027890'),
+(71, '2025-07-16', '10:30:00', 'María Hernández', 'maría.hernández@gmail.com', 'Confirmada', 2147483647, 'COLEGIO LICEO FEMENINO DE CUNDINAMARCA MERCEDES NARIÑO', 18, 'Carrera 30 # 45-67', '10024567'),
+(72, '2025-07-26', '08:30:00', 'Ana Martínez', 'ana.martínez@gmail.com', 'Confirmada', 2147483647, 'COLEGIO GUILLERMO LEON VALENCIA (IED)', 13, 'Calle 72 # 10-34', '10012345'),
+(73, '2025-07-23', '10:00:00', 'Laura Gómez', 'laura.gómez@gmail.com', 'Cancelada', 2147483647, 'COLEGIO ATANASIO GIRARDOT (IED)', 13, 'Calle 72 # 10-34', '10004567'),
+(74, '2025-07-18', '13:00:00', 'David Rojas', 'david.rojas@gmail.com', 'Pendiente', 2147483647, 'COLEGIO LICEO FEMENINO DE CUNDINAMARCA MERCEDES NARIÑO', 18, 'Carrera 30 # 45-67', '10021234'),
+(75, '2025-07-09', '14:00:00', 'Pedro García', 'pedro.garcía@gmail.com', 'Pendiente', 2147483647, 'COLEGIO ANDRES BELLO', 15, 'Carrera 9 # 94A-24', '10035678');
 
 -- --------------------------------------------------------
 
@@ -719,7 +726,7 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id_usuario`, `tipo_documento`, `numero_documento`, `nombre`, `apellido`, `telefono`, `correo`, `contrasena`, `id_rol`) VALUES
-(76, 'Cédula de Ciudadanía', '10001234', 'Juan', 'Pérez', '3200000000', 'juan.pérez@gmail.com', 'Clave1!', 3),
+(76, 'Cédula de Ciudadanía', '10001234', 'Juan', 'Pérez', '3200000000', 'juan.perez@gmail.com', 'Clave1!', 3),
 (77, 'Tarjeta de Identidad', '10004567', 'Laura', 'Gómez', '3200000001', 'laura.gómez@gmail.com', 'Clave2!', 3),
 (78, 'Cédula de Ciudadanía', '10007890', 'Carlos', 'Ramírez', '3200000002', 'carlos.ramírez@gmail.com', 'Clave3!', 3),
 (79, 'Cédula de Extranjería', '10012345', 'Ana', 'Martínez', '3200000003', 'ana.martínez@gmail.com', 'Clave4!', 3),
@@ -743,7 +750,9 @@ INSERT INTO `usuario` (`id_usuario`, `tipo_documento`, `numero_documento`, `nomb
 (97, 'Tarjeta de Identidad', '10072345', 'Valeria', 'Suárez', '3200000021', 'valeria.suárez@gmail.com', 'Clave22!', 1),
 (98, 'Cédula de Extranjería', '10075678', 'Sebastián', 'Nieto', '3200000022', 'sebastián.nieto@gmail.com', 'Clave23!', 2),
 (99, 'Cédula de Ciudadanía', '10078901', 'Gabriela', 'Pinto', '3200000023', 'gabriela.pinto@gmail.com', 'Clave24!', 1),
-(100, 'Pasaporte', '10081234', 'Ricardo', 'Delgado', '3200000024', 'ricardo.delgado@gmail.com', 'Clave25!', 2);
+(100, 'Pasaporte', '10081234', 'Ricardo', 'Delgado', '3200000024', 'ricardo.delgado@gmail.com', 'Clave25!', 2),
+(107, '', '1515421', 'BRIYITH STEFANY', 'RODRIGUEZ AMORTEGUI', '3204686377', 'diego.ca565o@gmail.com', 'Denver', 3),
+(108, '', '1068978566', 'Daniela', 'Rodriguez', '320135165132', 'ed.rodri@gmail.com', 'Denver2022', 3);
 
 --
 -- Índices para tablas volcadas
@@ -753,8 +762,7 @@ INSERT INTO `usuario` (`id_usuario`, `tipo_documento`, `numero_documento`, `nomb
 -- Indices de la tabla `citas`
 --
 ALTER TABLE `citas`
-  ADD PRIMARY KEY (`id_cita`),
-  ADD KEY `fk_citas_instituciones` (`id_colegio`);
+  ADD PRIMARY KEY (`id_cita`);
 
 --
 -- Indices de la tabla `cupos`
@@ -842,7 +850,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `citas`
 --
 ALTER TABLE `citas`
-  MODIFY `id_cita` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_cita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT de la tabla `cupos`
@@ -890,7 +898,7 @@ ALTER TABLE `sedes`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
 
 --
 -- Restricciones para tablas volcadas
@@ -900,7 +908,7 @@ ALTER TABLE `usuario`
 -- Filtros para la tabla `citas`
 --
 ALTER TABLE `citas`
-  ADD CONSTRAINT `fk_citas_instituciones` FOREIGN KEY (`id_colegio`) REFERENCES `instituciones` (`Id_Colegio`);
+  ADD CONSTRAINT `fk_documento_usuario` FOREIGN KEY (`documento_usuario`) REFERENCES `usuario` (`numero_documento`);
 
 --
 -- Filtros para la tabla `cupos`

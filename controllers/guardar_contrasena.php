@@ -13,7 +13,7 @@ if (empty($numero_documento) || empty($contrasena) || empty($confirmar)) {
     exit();
 }
 
-// Validar coincidencia de contraseñas
+// Validar coincidencia de contraseñas  
 if ($contrasena !== $confirmar) {
     echo "<script>alert('Las contraseñas no coinciden.'); window.history.back();</script>";
     exit();

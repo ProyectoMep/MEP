@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Citas Agendadas - MEP</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #003366;
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      color: white;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .cita {
+      border-bottom: 1px solid #ccc;
+      padding: 15px 0;
+    }
+
+    .acciones {
+      margin-top: 10px;
+    }
+
+    .acciones button {
+      margin-right: 10px;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      background-color: #005baa;
+      color: white;
+      cursor: pointer;
+    }
+
+    .acciones button:hover {
+      background-color: #004080;
+    }
+
+    .estado {
+      font-style: italic;
+      color: #333;
+    }
+
+    .center {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .volver-btn {
+      margin-top: 30px;
+      padding: 10px 20px;
+      background-color: #005baa;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .volver-btn:hover {
+      background-color: #004080;
+    }
+  </style>
+</head>
+<body>
+  <header>Citas Agendadas</header>
+
+  <div class="container" id="contenido">
+    <p class="center">Cargando citas...</p>
+  </div>
+
+  <div class="center">
+    <button class="volver-btn" onclick="history.back()">Volver</button>
+  </div>
+
+  <script>
+    const documentoUsuario = localStorage.getItem('documento_usuario');
+    if (!documentoUsuario) {
+      window.location.href = '../../views/login.html';
+    }
+
+    fetch('../../controllers/citas.php?documento=' + documentoUsuario)
+      .then(res => res.json())
+      .then(citas => {
+        const contenedor = document.getElementById('contenido');
+        if (!citas || citas.length === 0) {
+          contenedor.innerHTML = '<p class="center">No hay citas agendadas.</p>';
+          return;
+        }
+
+        contenedor.innerHTML = '';
+        citas.forEach(cita => {
+          const div = document.createElement('div');
+          div.className = 'cita';
+
+          div.innerHTML = `
+            <strong>${cita.motivo}</strong><br>
+            Fecha: ${cita.fecha_cita} ${cita.hora_cita}<br>
+            Institución: ${cita.nombre_institucion}<br>
+            Dirección: ${cita.direccion_sede}<br>
+          `;
+
+          const acciones = document.createElement('div');
+          acciones.className = 'acciones';
+
+          if (cita.editable) {
+            acciones.innerHTML = `
+              <button onclick="cancelarCita(${cita.id_cita})">Cancelar</button>
+              <button onclick="reprogramarCita(${cita.id_cita})">Reprogramar</button>
+            `;
+          } else {
+            acciones.innerHTML = `<span class="estado">${cita.estado_cita}</span>`;
+          }
+
+          div.appendChild(acciones);
+          contenedor.appendChild(div);
+        });
+      })
+      .catch(err => {
+        document.getElementById('contenido').innerHTML = '<p class="center">Error cargando las citas.</p>';
+        console.error(err);
+      });
+
+    function cancelarCita(id) {
+      const confirmar = confirm("¿Estás seguro de que deseas cancelar esta cita?");
+      if (!confirmar) return;
+
+      fetch('../../controllers/cancelar_cita.php', {
+        method: 'POST',
+        body: new URLSearchParams({ id_cita: id })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          alert("La cita ha sido cancelada correctamente.");
+          location.reload();
+        } else {
+          alert(data.mensaje || "No se pudo cancelar la cita.");
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Error al conectar con el servidor.");
+      });
+    }
+
+    function reprogramarCita(id) {
+      window.location.href = `reprogramarCita.html?id=${id}`;
+    }
+  </script>
+</body>
+</html>

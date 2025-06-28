@@ -1,28 +1,45 @@
 <?php
 include './Conexion.php';
 
+// Asegura que la respuesta sea JSON
+header('Content-Type: application/json');
+
+// Validación básica
+if (!isset($_POST['correo'], $_POST['contrasena'])) {
+    echo json_encode([
+        'success' => false,
+        'mensaje' => 'Datos incompletos.'
+    ]);
+    exit();
+}
+
 $correo = $_POST['correo'];
 $contrasena = $_POST['contrasena'];
-$tipoUsuario = $_POST['tipoUsuario'];
-
 
 $sql = "SELECT * FROM usuario WHERE correo = ? AND contrasena = ?";
-
 $stmt = $mysqli->prepare($sql);
 $stmt->bind_param("ss", $correo, $contrasena);
 $stmt->execute();
 $result = $stmt->get_result();
 
-if ($result-> num_rows > 0) {
-    $url = "http://localhost/pagina_web_mep/views/procesoLogeo/interfazPu.html";
-    echo "<script>window.location.href = '$url';</script>";
-    exit();
+$response = [];
+
+if ($result->num_rows > 0) {
+    $usuario = $result->fetch_assoc();
+    $response = [
+        'success' => true,
+        'documento' => $usuario['numero_documento']
+    ];
 } else {
-    echo "Datos erróneos, por favor, revisar.";
-    exit();
+    $response = [
+        'success' => false,
+        'mensaje' => 'Credenciales inválidas.'
+    ];
 }
 
-$stmt->close();
-$mysqli->close();1
+// Devolver JSON limpio
+echo json_encode($response);
 
-?>
+// Cerrar conexiones
+$stmt->close();
+$mysqli->close();
