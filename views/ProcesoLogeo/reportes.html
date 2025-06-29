@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reportes de Citas Agendadas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+    }
+    header {
+      background-color: #003366;
+      padding: 20px;
+      text-align: center;
+      color: white;
+      font-size: 24px;
+    }
+    .container {
+      margin: 30px;
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #003366;
+      color: white;
+    }
+    .export-button {
+      background-color: #005baa;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>Reportes de Citas Agendadas</header>
+
+  <div class="container">
+    <form action="../../controllers/exportar_excel.php" method="post">
+      <button type="submit" class="export-button">Exportar a Excel</button>
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Fecha</th>
+          <th>Hora</th>
+          <th>Institución</th>
+          <th>Sede</th>
+          <th>Grado</th>
+          <th>Cantidad</th>
+          <th>Motivo</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody id="tabla-citas">
+        <!-- Las filas se insertan con JS -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    fetch('../../controllers/reporteCitas.php?admin=true')
+      .then(res => res.json())
+      .then(data => {
+        const tbody = document.getElementById('tabla-citas');
+        if (!Array.isArray(data)) {
+          tbody.innerHTML = '<tr><td colspan="9">No se pudo obtener la información.</td></tr>';
+          return;
+        }
+        if (data.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="9">No hay citas agendadas.</td></tr>';
+          return;
+        }
+        data.forEach(cita => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${cita.id_cita}</td>
+            <td>${cita.fecha_cita}</td>
+            <td>${cita.hora_cita}</td>
+            <td>${cita.nombre_institucion}</td>
+            <td>${cita.id_sede}</td>
+            <td>${cita.grado}</td>
+            <td>${cita.cantidad_estudiantes}</td>
+            <td>${cita.motivo_cita}</td>
+            <td>${cita.estado_cita}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      })
+      .catch(error => {
+        console.error('Error cargando citas:', error);
+        document.getElementById('tabla-citas').innerHTML = '<tr><td colspan="9">Error de conexión.</td></tr>';
+      });
+  </script>
+</body>
+</html>

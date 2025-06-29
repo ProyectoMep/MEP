@@ -10,47 +10,20 @@
       margin: 0;
       background-color: #f4f4f4;
     }
-
-    .top-bar, .nav-links {
-      background-color: #005baa;
-      color: white;
-      padding: 10px;
-    }
-
-    .top-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
     .navbar {
       background-color: #003366;
       color: white;
       text-align: center;
       padding: 20px;
     }
-
-    .nav-links a {
-      color: white;
-      text-decoration: none;
-      margin-right: 15px;
-    }
-
     .container {
       text-align: center;
       padding: 40px 20px;
     }
-
     .check-icon {
       font-size: 48px;
-      color: green;
+      color: purple;
     }
-
-    h2 {
-      margin-top: 10px;
-      font-size: 24px;
-    }
-
     .details-box {
       background-color: #fff;
       padding: 25px;
@@ -60,13 +33,11 @@
       text-align: left;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-
     .details-box p {
       margin: 10px 0;
     }
-
     .confirm-button {
-      background-color: #005baa;
+      background-color: #003366;
       color: white;
       border: none;
       padding: 12px 30px;
@@ -74,42 +45,17 @@
       font-size: 16px;
       cursor: pointer;
     }
-
-    .confirm-button:hover {
-      background-color: #003366;
-    }
   </style>
 </head>
 <body>
-
-  <!-- Top navigation -->
-  <div class="top-bar">
-    <span>https://MEP.edu.co</span>
-    <input type="text" placeholder="Buscar..." style="padding:5px; border-radius:5px;">
-  </div>
-
-  <!-- Encabezado -->
   <div class="navbar">
     <h1>MEP - Matrículas y Educación pública</h1>
   </div>
-
-  <!-- Navegación -->
-  <div class="nav-links">
-    <a href="#">Preguntas Frecuentes</a>
-    <a href="#">Ayuda</a>
-    <a href="#">Contáctanos</a>
-  </div>
-
-  <!-- Contenido -->
   <div class="container">
     <div class="check-icon">✔️</div>
     <h2>Confirma tu cita</h2>
-
-    <div class="details-box" id="detalle-cita">
-      <!-- Se rellena con JavaScript -->
-    </div>
-
-    <a href="confirmagenda.HTML" class="btn"><button class="confirm-button" onclick="alert('¡Cita agendada exitosamente!')">Agendar</button></a>
+    <div class="details-box" id="detalle-cita"></div>
+    <button class="confirm-button" onclick="agendarCita()">Agendar</button>
   </div>
 
   <script>
@@ -119,17 +65,55 @@
       document.getElementById("detalle-cita").innerHTML = `
         <p><strong>Fecha:</strong> ${datos.fecha}</p>
         <p><strong>Hora:</strong> ${datos.hora}</p>
-        <p><strong>Colegio:</strong> ${datos.colegio}</p>
-        <p><strong>Dirección:</strong> ${datos.direccion}</p>
+        <p><strong>Colegio:</strong> ${datos.institucion}</p>
+        <p><strong>Dirección:</strong> ${datos.direccion || '-'}</p>
         <p><strong>Jornada:</strong> ${datos.jornada}</p>
         <p><strong>Grado:</strong> ${datos.grado}</p>
         <p><strong>Cantidad de estudiantes:</strong> ${datos.cantidad}</p>
-        <p><strong>Tipo de cita:</strong> ${datos.tipoCita}</p>
+        <p><strong>Motivo de cita:</strong> ${datos.motivo_cita}</p>
       `;
-    } else {
-      document.getElementById("detalle-cita").innerHTML = `<p>No hay datos de cita disponibles.</p>`;
+    }
+
+    function agendarCita() {
+      const documento_usuario = localStorage.getItem("documento_usuario");
+      if (!datos || !documento_usuario) return alert("Datos incompletos.");
+
+      const formData = new FormData();
+      formData.append("documento_usuario", documento_usuario);
+      formData.append("institucion", datos.institucion);
+      formData.append("sede", datos.sede || '');
+      formData.append("cantidad", datos.cantidad);
+      formData.append("grado", datos.grado);
+      formData.append("jornada", datos.jornada);
+      formData.append("motivo_cita", datos.motivo_cita);
+      formData.append("fecha", datos.fecha);
+      formData.append("hora", datos.hora);
+
+      fetch("../../controllers/agendar_cita.php", {
+        method: "POST",
+        body: formData
+      })
+      .then(res => res.text())
+      .then(text => {
+        try {
+          const data = JSON.parse(text);
+          if (data.success) {
+            alert("¡Cita agendada exitosamente!");
+            localStorage.removeItem("citaMEP");
+            window.location.href = "citasAgendadas.html";
+          } else {
+            alert("Error al agendar: " + (data.mensaje || "Intenta nuevamente."));
+          }
+        } catch (e) {
+          console.error("Respuesta inesperada del servidor:", text);
+          alert("Respuesta inesperada del servidor.");
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Error de conexión.");
+      });
     }
   </script>
-
 </body>
 </html>

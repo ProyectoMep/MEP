@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administrador - MEP</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    }
+    header {
+      background-color: #003366;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      font-size: 24px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 40px auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+    }
+    .card {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      width: 250px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .card:hover {
+      transform: scale(1.05);
+    }
+    .card h3 {
+      margin: 0 0 10px;
+    }
+    .card p {
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <header>MEP</header>
+  <div class="container">
+    <div class="card" onclick="location.href='registrar_institucion.html'">
+      <h3>Registrar Institución</h3>
+      <p>Agregar nuevas instituciones educativas al sistema.</p>
+    </div>
+    <div class="card" onclick="location.href='editar_informacion.html'">
+      <h3>Editar Información</h3>
+      <p>Modificar datos existentes de las instituciones.</p>
+    </div>
+    <div class="card" onclick="location.href='reportes.html'">
+      <h3>Vista de Reportes</h3>
+      <p>Consultar y exportar reportes de citas agendadas.</p>
+    </div>
+  </div>
+</body>
+</html>

@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Citas Agendadas - MEP</title>
   <style>
     body {
@@ -87,12 +87,13 @@
 
   <div class="center">
     <button class="volver-btn" onclick="history.back()">Volver</button>
+    
   </div>
 
   <script>
     const documentoUsuario = localStorage.getItem('documento_usuario');
     if (!documentoUsuario) {
-      window.location.href = '../../views/login.html';
+      window.location.href = '../../AgendarCita/interfazP.HTML';
     }
 
     fetch('../../controllers/citas.php?documento=' + documentoUsuario)
@@ -104,13 +105,23 @@
           return;
         }
 
+        citas.sort((a, b) => {
+          const estadoOrden = {
+            'pendiente': 0,
+            'confirmada': 1,
+            'reprogramada': 2,
+            'cancelada': 3
+          };
+          return estadoOrden[a.estado_cita.toLowerCase()] - estadoOrden[b.estado_cita.toLowerCase()];
+        });
+
         contenedor.innerHTML = '';
         citas.forEach(cita => {
           const div = document.createElement('div');
           div.className = 'cita';
 
           div.innerHTML = `
-            <strong>${cita.motivo}</strong><br>
+            <strong>${cita.estado_cita.charAt(0).toUpperCase() + cita.estado_cita.slice(1)}</strong><br>
             Fecha: ${cita.fecha_cita} ${cita.hora_cita}<br>
             Institución: ${cita.nombre_institucion}<br>
             Dirección: ${cita.direccion_sede}<br>
@@ -119,13 +130,13 @@
           const acciones = document.createElement('div');
           acciones.className = 'acciones';
 
-          if (cita.editable) {
+          if (cita.estado_cita.toLowerCase() !== 'cancelada') {
             acciones.innerHTML = `
-              <button onclick="cancelarCita(${cita.id_cita})">Cancelar</button>
+              <button onclick="confirmarCancelacion(${cita.id_cita})">Cancelar</button>
               <button onclick="reprogramarCita(${cita.id_cita})">Reprogramar</button>
             `;
           } else {
-            acciones.innerHTML = `<span class="estado">${cita.estado_cita}</span>`;
+            acciones.innerHTML = `<span class="estado">Cancelada</span>`;
           }
 
           div.appendChild(acciones);
@@ -137,31 +148,34 @@
         console.error(err);
       });
 
-    function cancelarCita(id) {
-      const confirmar = confirm("¿Estás seguro de que deseas cancelar esta cita?");
-      if (!confirmar) return;
-
-      fetch('../../controllers/cancelar_cita.php', {
-        method: 'POST',
-        body: new URLSearchParams({ id_cita: id })
-      })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          alert("La cita ha sido cancelada correctamente.");
-          location.reload();
-        } else {
-          alert(data.mensaje || "No se pudo cancelar la cita.");
-        }
-      })
-      .catch(err => {
-        console.error(err);
-        alert("Error al conectar con el servidor.");
-      });
-    }
-
     function reprogramarCita(id) {
       window.location.href = `reprogramarCita.html?id=${id}`;
+    }
+
+    function confirmarCancelacion(id) {
+      const confirmacion = confirm("¿Está seguro que desea cancelar esta cita?");
+      if (confirmacion) {
+        const formData = new FormData();
+        formData.append("id_cita", id);
+
+        fetch('../../controllers/cancelar_cita.php', {
+          method: 'POST',
+          body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            alert("Cita cancelada exitosamente.");
+            location.reload();
+          } else {
+            alert("Error al cancelar la cita: " + data.mensaje);
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          alert("No se pudo conectar con el servidor.");
+        });
+      }
     }
   </script>
 </body>
