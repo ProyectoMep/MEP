@@ -4,7 +4,7 @@ include './Conexion.php';
 // Asegura que la respuesta sea JSON
 header('Content-Type: application/json');
 
-// Validación básica
+// Validación de entrada
 if (!isset($_POST['correo'], $_POST['contrasena'])) {
     echo json_encode([
         'success' => false,
@@ -16,30 +16,36 @@ if (!isset($_POST['correo'], $_POST['contrasena'])) {
 $correo = $_POST['correo'];
 $contrasena = $_POST['contrasena'];
 
-$sql = "SELECT * FROM usuario WHERE correo = ? AND contrasena = ?";
+// Consulta para validar usuario y contraseña
+$sql = "SELECT numero_documento, id_rol FROM usuario WHERE correo = ? AND contrasena = ?";
 $stmt = $mysqli->prepare($sql);
+
+if (!$stmt) {
+    echo json_encode([
+        'success' => false,
+        'mensaje' => 'Error al preparar la consulta.'
+    ]);
+    exit();
+}
+
 $stmt->bind_param("ss", $correo, $contrasena);
 $stmt->execute();
 $result = $stmt->get_result();
 
-$response = [];
-
 if ($result->num_rows > 0) {
     $usuario = $result->fetch_assoc();
-    $response = [
+    echo json_encode([
         'success' => true,
-        'documento' => $usuario['numero_documento']
-    ];
+        'documento' => $usuario['numero_documento'],
+        'rol' => $usuario['id_rol']
+    ]);
 } else {
-    $response = [
+    echo json_encode([
         'success' => false,
         'mensaje' => 'Credenciales inválidas.'
-    ];
+    ]);
 }
 
-// Devolver JSON limpio
-echo json_encode($response);
-
-// Cerrar conexiones
+// Cerrar recursos
 $stmt->close();
 $mysqli->close();

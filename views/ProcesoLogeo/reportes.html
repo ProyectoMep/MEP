@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reportes de Citas</title>
   <style>
     body {
@@ -23,6 +23,17 @@
       background: white;
       padding: 20px;
       border-radius: 10px;
+    }
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .filters select, .filters input {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
     }
     button {
       background-color: #005baa;
@@ -51,7 +62,34 @@
 <body>
   <header>Reportes de Citas Agendadas</header>
   <div class="container">
-    <button onclick="exportarExcel()">Exportar a Excel</button>
+    <div class="filters">
+      <select id="filtroInstitucion">
+        <option value="">Todas las instituciones</option>
+        <option value="COL NACIONES UNIDAS (IED)">COL NACIONES UNIDAS (IED)</option>
+        <option value="COL NESTOR FORERO ALCALA (IED)">COL NESTOR FORERO ALCALA (IED)</option>
+      </select>
+
+      <select id="filtroEstado">
+        <option value="">Todos los estados</option>
+        <option value="Pendiente">Pendiente</option>
+        <option value="Cancelada">Cancelada</option>
+        <option value="Reprogramada">Reprogramada</option>
+      </select>
+
+      <select id="filtroJornada">
+        <option value="">Todas las jornadas</option>
+        <option value="Mañana">Mañana</option>
+        <option value="Tarde">Tarde</option>
+        <option value="Noche">Noche</option>
+        <option value="Fin de semana">Fin de semana</option>
+        <option value="Única">Única</option>
+      </select>
+
+      <input type="date" id="filtroFecha">
+      <button onclick="cargarCitas()">Aplicar filtros</button>
+      <button onclick="exportarExcel()">Exportar a Excel</button>
+    </div>
+
     <table id="tablaCitas">
       <thead>
         <tr>
@@ -63,6 +101,7 @@
           <th>Grado</th>
           <th>Cantidad</th>
           <th>Motivo</th>
+          <th>Jornada</th>
           <th>Estado</th>
         </tr>
       </thead>
@@ -71,36 +110,65 @@
   </div>
 
   <script>
-    fetch('../../controllers/reporteCitas.php?admin=true')
-      .then(res => res.json())
-      .then(data => {
-        const tbody = document.querySelector('#tablaCitas tbody');
-        tbody.innerHTML = '';
+    function cargarCitas() {
+      const institucion = document.getElementById('filtroInstitucion').value;
+      const estado = document.getElementById('filtroEstado').value;
+      const jornada = document.getElementById('filtroJornada').value;
+      const fecha = document.getElementById('filtroFecha').value;
 
-        data.forEach(cita => {
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td>${cita.id_cita}</td>
-            <td>${cita.fecha_cita}</td>
-            <td>${cita.hora_cita}</td>
-            <td>${cita.nombre_institucion}</td>
-            <td>${cita.id_sede}</td>
-            <td>${cita.grado}</td>
-            <td>${cita.cantidad_estudiantes}</td>
-            <td>${cita.motivo_cita}</td>
-            <td>${cita.estado_cita}</td>
-          `;
-          tbody.appendChild(row);
-        });
-      })
-      .catch(err => {
-        alert("Error al cargar las citas.");
-        console.error(err);
+      const params = new URLSearchParams({
+        admin: 'true',
+        institucion,
+        estado,
+        jornada,
+        fecha
       });
 
-    function exportarExcel() {
-      window.location.href = '../../controllers/reporteCitas.php';
+      fetch(`../../controllers/reporteCitas.php?${params}`)
+        .then(res => res.json())
+        .then(data => {
+          const tbody = document.querySelector('#tablaCitas tbody');
+          tbody.innerHTML = '';
+
+          if (data.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="10">No hay resultados</td></tr>';
+            return;
+          }
+
+          data.forEach(cita => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${cita.id_cita}</td>
+              <td>${cita.fecha_cita}</td>
+              <td>${cita.hora_cita}</td>
+              <td>${cita.nombre_institucion}</td>
+              <td>${cita.id_sede}</td>
+              <td>${cita.grado}</td>
+              <td>${cita.cantidad_estudiantes}</td>
+              <td>${cita.motivo_cita}</td>
+              <td>${cita.jornada}</td>
+              <td>${cita.estado_cita}</td>
+            `;
+            tbody.appendChild(row);
+          });
+        })
+        .catch(err => {
+          console.error('Error al cargar citas:', err);
+          alert('Error al cargar los datos');
+        });
     }
+
+    function exportarExcel() {
+      const institucion = document.getElementById('filtroInstitucion').value;
+      const estado = document.getElementById('filtroEstado').value;
+      const jornada = document.getElementById('filtroJornada').value;
+      const fecha = document.getElementById('filtroFecha').value;
+
+      const params = new URLSearchParams({ institucion, estado, jornada, fecha });
+      window.location.href = `../../controllers/reporteCitas.php?${params}`;
+    }
+
+    window.onload = cargarCitas;
   </script>
 </body>
 </html>
