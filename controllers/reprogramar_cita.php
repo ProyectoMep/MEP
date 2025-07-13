@@ -2,41 +2,46 @@
 include './Conexion.php';
 header('Content-Type: application/json');
 
-$idCita = $_POST['id_cita'] ?? null;
-$nuevaFecha = $_POST['fecha_cita'] ?? null;
-$nuevaHora = $_POST['hora_cita'] ?? null;
-
-if (!$idCita || !$nuevaFecha || !$nuevaHora) {
-    echo json_encode(['success' => false, 'mensaje' => 'Faltan datos.']);
+// Verificar si los datos necesarios existen
+if (!isset($_POST['id_cita'], $_POST['fecha_cita'], $_POST['hora_cita'])) {
+    echo json_encode(['success' => false, 'mensaje' => 'Faltan datos requeridos.']);
     exit;
 }
 
-// Consultar datos anteriores
-$sqlOld = "SELECT documento_usuario, nombre_institucion, direccion_sede FROM citas WHERE id_cita = ?";
-$stmtOld = $mysqli->prepare($sqlOld);
-$stmtOld->bind_param('i', $idCita);
-$stmtOld->execute();
-$res = $stmtOld->get_result();
+// Sanitizar entrada
+$id_cita = intval($_POST['id_cita']);
+$fecha_cita = $_POST['fecha_cita'];
+$hora_cita = $_POST['hora_cita'];
 
-if (!$res || $res->num_rows === 0) {
-    echo json_encode(['success' => false, 'mensaje' => 'Cita original no encontrada.']);
+// Validaciones básicas
+if (!$id_cita || !$fecha_cita || !$hora_cita) {
+    echo json_encode(['success' => false, 'mensaje' => 'Datos inválidos.']);
     exit;
 }
 
-$previa = $res->fetch_assoc();
+require_once '../../config/conexion.php'; // Ajusta esta ruta a tu estructura real
 
-// Insertar nueva cita
-$sqlInsert = "INSERT INTO citas (documento_usuario, fecha_cita, hora_cita, estado_cita, nombre_institucion, direccion_sede)
-              VALUES (?, ?, ?, 'Reprogramada', ?, ?)";
-$stmtNew = $mysqli->prepare($sqlInsert);
-$stmtNew->bind_param('sssss', $previa['documento_usuario'], $nuevaFecha, $nuevaHora, $previa['nombre_institucion'], $previa['direccion_sede']);
+$conn = conectar(); // Supongo que tienes una función conectar() en ese archivo
 
-if ($stmtNew->execute()) {
+if ($conn->connect_error) {
+    echo json_encode(['success' => false, 'mensaje' => 'Error de conexión a la base de datos.']);
+    exit;
+}
+
+// Preparar y ejecutar el UPDATE
+$stmt = $conn->prepare("UPDATE citas SET fecha_cita = ?, hora_cita = ? WHERE id = ?");
+if (!$stmt) {
+    echo json_encode(['success' => false, 'mensaje' => 'Error al preparar consulta.']);
+    exit;
+}
+
+$stmt->bind_param("ssi", $fecha_cita, $hora_cita, $id_cita);
+
+if ($stmt->execute()) {
     echo json_encode(['success' => true]);
 } else {
-    echo json_encode(['success' => false, 'mensaje' => 'Error al insertar nueva cita.']);
+    echo json_encode(['success' => false, 'mensaje' => 'No se pudo actualizar la cita.']);
 }
 
-$stmtNew->close();
-$stmtOld->close();
-$mysqli->close();
+$stmt->close();
+$conn->close();
